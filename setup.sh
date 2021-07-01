@@ -10,11 +10,6 @@
 #set -x
 
 
-##### Location information
-keyboardLayout=""         # Set keyboard layout                                       [ --keyboard gb]
-timezone=""    # Set timezone location                                     [ --timezone Europe/London ]
-
-
 sudo apt-get update
 sudo apt-get install full-upgrade -y
 sudo apt-get install kali-linux-large -y
@@ -43,9 +38,11 @@ RESET="\033[00m"       # Normal
 sudo apt install -y kali-grant-root && sudo dpkg-reconfigure kali-grant-root
 
 #### update sources.list
+echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
+
 file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
 ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
-wget https://raw.githubusercontent.com/D4nk0St0rM/general_linux_notes/main/sources.list
+wget https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list
 sudo mv sources.list $file
 
 
@@ -53,6 +50,8 @@ sudo mv sources.list $file
 wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc
 
 ### GB Locales
+echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ Locales (${BOLD}gb${RESET})"
+
 sudo update-locale LANG=en_GB.UTF-8
 
 #####location information
@@ -145,9 +144,6 @@ grep -q "^alias l='ls $LS_OPTIONS -lA'" "${file}" 2>/dev/null || echo "alias l='
 
 #--- Apply new configs
 if [[ "${SHELL}" == "/bin/zsh" ]]; then source ~/.zshrc else source "${file}"; fi
-
-
-################# TO CONTINUE TESTING .......... 
 
 ##### Install GNOME Terminator
 echo -e "\n ${GREEN}[+]${RESET} Installing GNOME ${GREEN}Terminator${RESET} ~ multiple terminals in a single window"
