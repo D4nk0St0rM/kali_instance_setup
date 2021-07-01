@@ -28,37 +28,6 @@ BLUE="\033[01;34m"     # Heading
 BOLD="\033[01;01m"     # Highlight
 RESET="\033[00m"       # Normal
 
-##### Read command line arguments
-while [[ "${#}" -gt 0 && ."${1}" == .-* ]]; do
-  opt="${1}";
-  shift;
-  case "$(echo ${opt} | tr '[:upper:]' '[:lower:]')" in
-    -|-- ) break 2;;
-
-    -keyboard|--keyboard )
-       keyboardLayout="${1}"; shift;;
-    -keyboard=*|--keyboard=* )
-       keyboardLayout="${opt#*=}";;
-    -timezone|--timezone )
-       timezone="${1}"; shift;;
-    -timezone=*|--timezone=* )
-       timezone="${opt#*=}";;
-
-    *) echo -e ' '${RED}'[!]'${RESET}" Unknown option: ${RED}${x}${RESET}" 1>&2 && exit 1;;
-   esac
-done
-
-
-##### Check user inputs
-if [[ -n "${timezone}" && ! -f "/usr/share/zoneinfo/${timezone}" ]]; then
-  echo -e ' '${RED}'[!]'${RESET}" Looks like the ${RED}timezone '${timezone}'${RESET} is incorrect/not supported (Example: Europe/London). Quitting..." 1>&2
-  exit 1
-elif [[ -n "${keyboardLayout}" && -e /usr/share/X11/xkb/rules/xorg.lst ]]; then
-  if ! $(grep -q " ${keyboardLayout} " /usr/share/X11/xkb/rules/xorg.lst); then
-    echo -e ' '${RED}'[!]'${RESET}" Looks like the ${RED}keyboard layout '${keyboardLayout}'${RESET} is incorrect/not supported (Example: gb). Quitting..." 1>&2
-    exit 1
-  fi
-fi
 
 
 ############################ Start
@@ -86,6 +55,19 @@ wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr
 ### GB Locales
 sudo update-locale LANG=en_GB.UTF-8
 
+#####location information
+echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ keyboard layout (${BOLD}gb${RESET})"
+geoip_keyboard=$(curl -s http://ifconfig.io/country_code | tr '[:upper:]' '[:lower:]')
+[ "${geoip_keyboard}" != "gb" ] && echo -e " ${YELLOW}[i]${RESET} Keyboard layout (${BOLD}gb${RESET}}) doesn't match what's been detected via GeoIP (${BOLD}${geoip_keyboard}${RESET}})"
+file=/etc/default/keyboard; #[ -e "${file}" ] && cp -n $file{,.bkup}
+sed -i 's/XKBLAYOUT=".*"/XKBLAYOUT="'gb'"/' "${file}"
+
+#####  Changing time zone
+echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ time zone (${BOLD}Europe/London${RESET})"
+echo "Europe/London" > /etc/timezone
+ln -sf "/usr/share/zoneinfo/$(cat /etc/timezone)" /etc/localtime
+dpkg-reconfigure -f noninteractive tzdata
+
 ##### update 
  echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
 for FILE in clean autoremove; do apt-get -y -qq "${FILE}"; done         # Clean up      clean remove autoremove autoclean
@@ -93,6 +75,7 @@ export DEBIAN_FRONTEND=noninteractive
 apt-get -qq update && APT_LISTCHANGES_FRONTEND=none apt-get -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 #--- Cleaning up temp stuff
 for FILE in clean autoremove; do apt-get -y -qq "${FILE}"; done         # Clean up - clean remove autoremove autoclean
+
 ###### kernel
 _TMP=$(dpkg -l | grep linux-image- | grep -vc meta)
 if [[ "${_TMP}" -gt 1 ]]; then
@@ -103,26 +86,14 @@ if [[ "${_TMP}" -gt 1 ]]; then
   echo -e " ${RED}[i]${RESET}    DO NOT RUN IF NOT USING THE LASTEST KERNEL!"
 fi
 
-
-##### Update location information - either value "" to skip.
-echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET}"
-if [[ -n "${keyboardLayout}" ]]; then
-  echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ keyboard layout (${BOLD}${keyboardLayout}${RESET})"
-  geoip_keyboard=$(curl -s http://ifconfig.io/country_code | tr '[:upper:]' '[:lower:]')
-  [ "${geoip_keyboard}" != "${keyboardLayout}" ] && echo -e " ${YELLOW}[i]${RESET} Keyboard layout (${BOLD}${keyboardLayout}${RESET}}) doesn't match what's been detected via GeoIP (${BOLD}${geoip_keyboard}${RESET}})"
-  file=/etc/default/keyboard; #[ -e "${file}" ] && cp -n $file{,.bkup}
-  sed -i 's/XKBLAYOUT=".*"/XKBLAYOUT="'${keyboardLayout}'"/' "${file}"
-else
-  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Skipping keyboard layout${RESET} (missing: '$0 ${BOLD}--keyboard <value>${RESET}')..." 1>&2
-fi
-#####  Changing time zone
-if [[ -n "${timezone}" ]]; then
-  echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ time zone (${BOLD}${timezone}${RESET})"
-  echo "${timezone}" > /etc/timezone
-  ln -sf "/usr/share/zoneinfo/$(cat /etc/timezone)" /etc/localtime
-  dpkg-reconfigure -f noninteractive tzdata
-else
-  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Skipping time zone${RESET} (missing: '$0 ${BOLD}--timezone <value>${RESET}')..." 1>&2
+##### Install kernel headers
+echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kernel headers${RESET}"
+apt-get -y -qq install make gcc "linux-headers-$(uname -r)" || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+if [[ $? -ne 0 ]]; then
+  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing kernel headers${RESET}" 1>&2
+  echo -e " ${YELLOW}[i]${RESET} Are you ${YELLOW}USING${RESET} the ${YELLOW}latest kernel${RESET}?"
+  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Reboot your machine${RESET}"
+  exit 1
 fi
 
 ##### Install kali large metapackage
@@ -144,15 +115,7 @@ grep -q "^alias l='ls $LS_OPTIONS -lA'" "${file}" 2>/dev/null || echo "alias l='
 if [[ "${SHELL}" == "/bin/zsh" ]]; then source ~/.zshrc else source "${file}"; fi
 
 
-##### Install kernel headers
-echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kernel headers${RESET}"
-apt-get -y -qq install make gcc "linux-headers-$(uname -r)" || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
-if [[ $? -ne 0 ]]; then
-  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing kernel headers${RESET}" 1>&2
-  echo -e " ${YELLOW}[i]${RESET} Are you ${YELLOW}USING${RESET} the ${YELLOW}latest kernel${RESET}?"
-  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Reboot your machine${RESET}"
-  exit 1
-fi
+
 
 ###############
 
@@ -214,7 +177,6 @@ file=~/.config/terminator/config; [ -e "${file}" ] && cp -n $file{,.bkup}
       parent = ""
 [plugins]
 EOF
-
 
 ##### Ivim - all users
 echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}vim${RESET} ~ CLI text editor"
