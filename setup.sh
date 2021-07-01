@@ -17,7 +17,7 @@ timezone=""    # Set timezone location                                     [ --t
 
 sudo apt-get update
 sudo apt-get install full-upgrade -y
-sudo apt-get install kali-linux-full -y
+sudo apt-get install kali-linux-large -y
 
 
 ##### Colour output
