@@ -12,6 +12,8 @@
 sauces="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/sources.list"
 mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
 gitlist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/git-clone.list"
+myzsh="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/zshrc"
+mybash="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/bashrc"
 
 #### skip prompts in apt-upgrade, etc.
 export DEBIAN_FRONTEND=noninteractive
@@ -288,6 +290,21 @@ do
 done
 sudo rm git-clone.list
 cd ~/
+
+
+##### Terminals and text editors
+echo -e "\n ${GREEN}[+]${RESET}Installing ZSH & Oh-My-ZSH ${GREEN} ~ unix shell ${RESET}"
+#--- Setup oh-my-zsh
+sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+#--- Configure zsh
+file=~/.zshrc; [ -e "$file" ] && cp -n $file{,.bkup}   #/etc/zsh/zshrc
+wget $myzsh
+mv zshrc $file
+
+echo -e "\n ${GREEN}[+]${RESET}Copy rc file ${GREEN} ~ my bashrc ${RESET}"
+file=~/.bashrc; [ -e "$file" ] && cp -n $file{,.bkup} 
+wget $mybash
+mv bashrc $file
 
 
 
