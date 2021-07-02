@@ -11,7 +11,7 @@
 
 sauces="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/sources.list"
 mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
-
+gitlist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/git-clone.list"
 
 #### skip prompts in apt-upgrade, etc.
 export DEBIAN_FRONTEND=noninteractive
@@ -266,12 +266,27 @@ do
     fi
 done
 
-
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - tempomail ${RESET}"
 wget https://github.com/kavishgr/tempomail/releases/download/1.1.0/linux-amd64-tempomail.tgz
 tar -xzvf linux-amd64-tempomail.tgz
 sudo mv tempomail /usr/local/bin/
 sudo rm linux-amd64-tempomail.tgz
+
+
+#### git clone from list
+
+wget $gitlist 1>/dev/null
+cd /opt
+cat git-clone.list | while read app || [[ -n $line ]];
+do
+    echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
+    sudo gitclone $app
+    if [[ "$?" -ne 0 ]]; then
+        echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing $app${RESET}" 1>&2
+    fi
+done
+
+
 
 
 
