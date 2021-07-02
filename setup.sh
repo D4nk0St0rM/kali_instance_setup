@@ -231,10 +231,10 @@ git config --global core.editor "vim"
 
 
 
-echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}TimeShift - backup & snapshots ${RESET}"
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - TimeShift ${RESET}"
 sudo apt-get install -y -qq timeshift
 if [[ $? -ne 0 ]]; then
-  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing - TimeShift - backup & snapshots ${RESET}" 1>&2
+  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing - TimeShift ${RESET}" 1>&2
   echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
   echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
   exit 1
