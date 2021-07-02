@@ -1,10 +1,10 @@
+timeshift
+apt-transport-https
 nishang
-libpcap-dev libcurl4-openssl-dev libssl-dev 2>/dev/null
 htop
 hexedit
 exif
 git
-dbus-x11
 dnsutils
 exiftool
 openvpn
@@ -25,10 +25,14 @@ btscanner
 spooftooph
 exploitdb
 pure-ftpd
-python3python3-pippython3-dev
+python2
+python2-pip
+python-pip
+python3
+python3-pip
+python3-dev
 nodejs
 glances
-realtek-rtl88xxau-dkms
 powershell
 net-tools
 rinetd
@@ -38,3 +42,8 @@ gimp
 libnetfilter-queue-dev
 libpcap-dev
 libusb-1.0-0-dev
+libpcap-dev
+libcurl4-openssl-dev
+libssl-dev
+dbus-x11
+realtek-rtl88xxau-dkms
