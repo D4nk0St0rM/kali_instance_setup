@@ -26,7 +26,7 @@ sudo mv sources.list $file
 #### Add repo keys
 wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc
 sudo apt-get -qq update
-sudo apt-get install -y -qq dist-upgrade 
+sudo apt-get install -y -qq full-upgrade 
 sudo apt-get install -y -qq kali-linux-large
 sudo apt-get install -y -qq software-properties-common
 sudo apt-get install -y -qq gnupg-agent
@@ -233,9 +233,22 @@ git config --global core.editor "vim"
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}TimeShift - backup & snapshots ${RESET}"
 sudo apt-get install -y -qq timeshift
+if [[ $? -ne 0 ]]; then
+  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing - TimeShift - backup & snapshots ${RESET}" 1>&2
+  echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
+  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
+  exit 1
+fi
 
-echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}transport protocols ${RESET}"
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - transport protocols ${RESET}"
 sudo apt-get install -y -qq apt-transport-https
+if [[ $? -ne 0 ]]; then
+  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing  - transport protocols ${RESET}" 1>&2
+  echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
+  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
+  exit 1
+fi
+
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}MS visual code studio ${RESET}"
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
@@ -254,7 +267,7 @@ echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete Folde
 
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
-s
+
 sudo apt-get  -y -qq autoremove
 # sudo reboot -f
 
