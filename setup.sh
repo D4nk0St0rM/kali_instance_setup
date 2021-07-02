@@ -285,8 +285,7 @@ do
         echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing $app${RESET}" 1>&2
     fi
 done
-
-
+cd ~/
 
 
 
