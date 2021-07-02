@@ -280,7 +280,7 @@ cd /opt
 cat git-clone.list | while read app || [[ -n $line ]];
 do
     echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
-    sudo gitclone $app
+    sudo git clone $app
     if [[ "$?" -ne 0 ]]; then
         echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing $app${RESET}" 1>&2
     fi
