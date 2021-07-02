@@ -303,8 +303,8 @@ sudo searchsploit u 1> /dev/null
 
 
 echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete Folders or files ${RESET}"
-sudo rm app-install.list 
-sudo rm sources.list
+sudo rm app-install.list*
+sudo rm sources.list*
 
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
