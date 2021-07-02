@@ -11,7 +11,7 @@
 
 #### skip prompts in apt-upgrade, etc.
 export DEBIAN_FRONTEND=noninteractive
-alias apt-get='yes "" | apt-get -o Dpkg::Options::="--force-confdef" -y'
+alias ='yes "" | apt-get -o Dpkg::Options::="--force-confdef" -y'
 
 
 #### update sources.list
@@ -25,11 +25,11 @@ sudo mv sources.list $file
 
 #### Add repo keys
 wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc
-sudo apt-get update
-sudo apt-get install dist-upgrade -y
-sudo apt-get install kali-linux-large -y
-sudo apt install software-properties-common -y
-sudo apt-get install gnupg-agent -y
+sudo apt-get -qq update
+sudo apt-get install -y -qq dist-upgrade 
+sudo apt-get install -y -qq kali-linux-large
+sudo apt-get install -y -qq software-properties-common
+sudo apt-get install -y -qq gnupg-agent
 if [[ "$?" -ne 0 ]]; then
     echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue accessing network repositories${RESET}" 1>&2
     echo -e " ${YELLOW}[i]${RESET} Are the remote network repositories ${YELLOW}currently being sync'd${RESET}?"
@@ -232,21 +232,21 @@ git config --global core.editor "vim"
 
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}TimeShift - backup & snapshots ${RESET}"
-sudo apt-get install -y timeshift
+sudo apt-get install -y -qq timeshift
 
-#### install transport protocol
-sudo apt-get install -y apt-transport-https
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}transport protocols ${RESET}"
+sudo apt-get install -y -qq apt-transport-https
 
-####install visual code studio
-toilet -f term -F border --gay "Microsoft Visual Code Studio"
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}MS visual code studio ${RESET}"
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft-archive-keyring.gpg
 sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
-sudo apt-get install -y code
-sudo rm microsoft.gpg 
+sudo apt-get install -y -qq code
+sudo rm microsoft.gpg
 
 
 echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Unzip files ${RESET}"
+sudo rm /usr/share/wordlists/rockyou.txt || echo -e ' '${RED}'[!] rockyou.txt does not exist'${RESET} 1>&2
 sudo gunzip /usr/share/wordlists/rockyou.txt.gz
 
 
@@ -254,8 +254,7 @@ echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete Folde
 
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
-sudo apt-get update -y 
-sudo apt-get dist-upgrade -y 
-sudo apt-get autoremove -y
+s
+sudo apt-get  -y -qq autoremove
 # sudo reboot -f
 
