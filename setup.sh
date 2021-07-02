@@ -24,7 +24,7 @@ sudo mv sources.list $file
 
 
 #### Add repo keys
-wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc
+wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc 1>&2
 sudo apt-get -qq update
 sudo apt-get -y -qq dist-upgrade 
 sudo apt-get install -y -qq kali-linux-large
