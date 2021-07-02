@@ -292,11 +292,11 @@ cd ~/
 
 
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - Unzip files ${RESET}"
-sudo rm /usr/share/wordlists/rockyou.txt || echo -e ' '${RED}'[!] rockyou.txt does not exist'${RESET} 1>&2
-sudo gunzip /usr/share/wordlists/rockyou.txt.gz 1> /dev/null
+# sudo rm /usr/share/wordlists/rockyou.txt || echo -e ' '${RED}'[!] rockyou.txt does not exist'${RESET} 1>&2
+sudo gunzip /usr/share/wordlists/rockyou.txt.gz || echo -e ' '${RED}'[!] rockyou.txt.gz does not exist'${RESET} 1>&2
 
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - add architecure & windows tools ${RESET}"
-sudo dpkg --add-architecture i386 && sudo apt-get update && wine32 && shellter 1> /dev/null
+sudo dpkg --add-architecture i386 && sudo apt-get update 1> /dev/null
 
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - searchsploit update ${RESET}"
 sudo searchsploit u 1> /dev/null
