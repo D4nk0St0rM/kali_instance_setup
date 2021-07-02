@@ -283,6 +283,7 @@ do
     sudo git clone $app
     if [[ "$?" -ne 0 ]]; then
         echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing $app${RESET}" 1>&2
+        echo -e " ${YELLOW}[i]${RESET} Try one thing ${RED} by deleting existing install $app ${YELLOW} removing any folders${RESET}"
     fi
 done
 cd ~/
