@@ -9,6 +9,14 @@
 #### Enable debug mode
 #set -x
 
+##### Colour output
+RED="\033[01;31m"      # Issues/Errors
+GREEN="\033[01;32m"    # Success
+YELLOW="\033[01;33m"   # Warnings/Information
+BLUE="\033[01;34m"     # Heading
+BOLD="\033[01;01m"     # Highlight
+RESET="\033[00m"       # Normal
+
 sauces="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/sources.list"
 mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
 gitlist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/git-clone.list"
@@ -29,8 +37,13 @@ sudo wget $sauces > $file
 
 #### Add repo keys
 wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc  1> /dev/null
+
+#### update
+echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
+echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kali-linux-large${RESET} meta-package ~ this ${BOLD}may take a while${RESET} depending on your Kali version / network etc etc...."
+sudo apt-get -y -qq install kali-linux-large || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 sudo apt-get -y -qq update
-sudo apt-get -y -qq dist-upgrade 
+sudo apt-get -y -qq dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 sudo apt-get install -y -qq kali-linux-large
 sudo apt-get install -y -qq software-properties-common
 sudo apt-get install -y -qq gnupg-agent
@@ -41,16 +54,7 @@ if [[ "$?" -ne 0 ]]; then
     curl -sI http://http.kali.org/README
     exit 1
   fi
-
-
-##### Colour output
-RED="\033[01;31m"      # Issues/Errors
-GREEN="\033[01;32m"    # Success
-YELLOW="\033[01;33m"   # Warnings/Information
-BLUE="\033[01;34m"     # Heading
-BOLD="\033[01;01m"     # Highlight
-RESET="\033[00m"       # Normal
-
+sudo apt-get -y -qq autoremove
 
 
 ############################ Start
@@ -85,13 +89,6 @@ echo "Europe/London" > /etc/timezone
 ln -sf "/usr/share/zoneinfo/$(cat /etc/timezone)" /etc/localtime
 dpkg-reconfigure -f noninteractive tzdata
 
-##### update 
- echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
-sudo apt-get -y -qq update 
-sudo apt-get -y dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
-#--- Cleaning up temp stuff
-sudo apt-get -y -qq autoremove
-
 
 ###### kernel
 _TMP=$(dpkg -l | grep linux-image- | grep -vc meta)
@@ -113,10 +110,7 @@ if [[ $? -ne 0 ]]; then
   exit 1
 fi
 
-##### Install kali large metapackage
-# https://tools.kali.org/kali-metapackages
-echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kali-linux-large${RESET} meta-package ~ this ${BOLD}may take a while${RESET} depending on your Kali version / network etc etc...."
-sudo apt-get -y -qq install kali-linux-large || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+
 
 ##### Configure bash - all users
 echo -e "\n ${GREEN}[+]${RESET} Configuring ${GREEN}bash${RESET} ~ CLI shell"
