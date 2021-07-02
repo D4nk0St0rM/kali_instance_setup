@@ -234,6 +234,28 @@ git config --global core.editor "vim"
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}TimeShift - backup & snapshots ${RESET}"
 sudo apt-get install -y timeshift
 
-echo -e "\n ${GREEN}[+]${RESET} Final Reboot ${GREEN} ...............Byeeeee ${RESET}"
+#### install transport protocol
+sudo apt-get install -y apt-transport-https
+
+####install visual code studio
+toilet -f term -F border --gay "Microsoft Visual Code Studio"
+curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
+sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft-archive-keyring.gpg
+sudo sh -c 'echo "deb [arch=amd64,arm64,armhf signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
+sudo apt-get install -y code
+sudo rm microsoft.gpg 
+
+
+echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Unzip files ${RESET}"
+sudo gunzip /usr/share/wordlists/rockyou.txt.gz
+
+
+echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete Folders or files ${RESET}"
+
+
+echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
+sudo apt-get update -y 
+sudo apt-get dist-upgrade -y 
+sudo apt-get autoremove -y
 # sudo reboot -f
 
