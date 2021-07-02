@@ -13,7 +13,8 @@
 sudo apt-get update
 sudo apt-get install full-upgrade -y
 sudo apt-get install kali-linux-large -y
-sudo apt install software-properties-common
+sudo apt install software-properties-common -y
+sudo apt-get install gnupg-agent -y
 
 
 
@@ -74,9 +75,9 @@ dpkg-reconfigure -f noninteractive tzdata
  echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
 for FILE in clean autoremove; do apt-get -y -qq "${FILE}"; done         # Clean up      clean remove autoremove autoclean
 export DEBIAN_FRONTEND=noninteractive
-apt-get -qq update && APT_LISTCHANGES_FRONTEND=none apt-get -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+sudo apt-get -y -qq update && APT_LISTCHANGES_FRONTEND=none apt-get -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 #--- Cleaning up temp stuff
-for FILE in clean autoremove; do apt-get -y -qq "${FILE}"; done         # Clean up - clean remove autoremove autoclean
+for FILE in clean autoremove; do sudo apt-get -y -qq "${FILE}"; done         # Clean up - clean remove autoremove autoclean
 
 ###### kernel
 _TMP=$(dpkg -l | grep linux-image- | grep -vc meta)
@@ -90,7 +91,7 @@ fi
 
 ##### Install kernel headers
 echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kernel headers${RESET}"
-apt-get -y -qq install make gcc "linux-headers-$(uname -r)" || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+sudo apt-get -y -qq install make gcc "linux-headers-$(uname -r)" || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 if [[ $? -ne 0 ]]; then
   echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing kernel headers${RESET}" 1>&2
   echo -e " ${YELLOW}[i]${RESET} Are you ${YELLOW}USING${RESET} the ${YELLOW}latest kernel${RESET}?"
@@ -110,7 +111,7 @@ grep -q "cdspell" "${file}" || echo "shopt -sq cdspell" >> "${file}"            
 grep -q "checkwinsize" "${file}" || echo "shopt -sq checkwinsize" >> "${file}"   # Wrap lines correctly after resizing
 grep -q "HISTSIZE" "${file}" || echo "HISTSIZE=100000" >> "${file}"               # Bash history (memory scroll back)
 grep -q "HISTFILESIZE" "${file}" || echo "HISTFILESIZE=100000" >> "${file}"       # Bash history (file .bash_history)
-rep -q "^alias ls='ls $LS_OPTIONS'" "${file}" 2>/dev/null || echo "alias ls='ls $LS_OPTIONS'" >> "${file}"
+grep -q "^alias ls='ls $LS_OPTIONS'" "${file}" 2>/dev/null || echo "alias ls='ls $LS_OPTIONS'" >> "${file}"
 grep -q "^alias ll='ls $LS_OPTIONS -l'" "${file}" 2>/dev/null || echo "alias ll='ls $LS_OPTIONS -l'" >> "${file}"
 grep -q "^alias l='ls $LS_OPTIONS -lA'" "${file}" 2>/dev/null || echo "alias l='ls $LS_OPTIONS -lA'" >> "${file}"
 #--- Apply new configs
@@ -164,7 +165,7 @@ EOF
 
 ##### Ivim - all users
 echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}vim${RESET} ~ CLI text editor"
-apt-get -y -qq install vim || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+sudo apt-get -y -qq install vim || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 #--- Configure vim
 file=/etc/vim/vimrc; [ -e "${file}" ] && cp -n $file{,.bkup}   #~/.vimrc
 ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
