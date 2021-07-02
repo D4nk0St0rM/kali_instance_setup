@@ -9,6 +9,10 @@
 #### Enable debug mode
 #set -x
 
+#### skip prompts in apt-upgrade, etc.
+export DEBIAN_FRONTEND=noninteractive
+alias apt-get='yes "" | apt-get -o Dpkg::Options::="--force-confdef" -y'
+
 
 #### update sources.list
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
