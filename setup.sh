@@ -9,6 +9,10 @@
 #### Enable debug mode
 #set -x
 
+sauces="https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list"
+mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
+
+
 #### skip prompts in apt-upgrade, etc.
 export DEBIAN_FRONTEND=noninteractive
 alias ='yes "" | apt-get -o Dpkg::Options::="--force-confdef" -y'
@@ -18,7 +22,7 @@ echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and 
 
 file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
 ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
-sudo curl --progress -k -L "https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list" > $file
+sudo wget $sauces > $file
 
 
 #### Add repo keys
@@ -248,7 +252,6 @@ grep -q -F "$path_exp" "$HOME/.profile" || echo $path_exp | tee -a "$HOME/.profi
 
 
 #### application install from list
-mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
 wget $mylist 1>/dev/null
 cat app-install.list | while read app || [[ -n $line ]];
 do
@@ -264,7 +267,6 @@ do
             fi
     else
         echo -e " ${YELLOW}[i]${RESET} The app ${YELLOW} $app ${RESET} is installed ${YELLOW} ... we can skip ${RESET}?"
-        exit
     fi
 done
 
