@@ -9,7 +9,7 @@
 #### Enable debug mode
 #set -x
 
-sauces="https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list"
+sauces="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/sources.list"
 mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
 
 
