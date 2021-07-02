@@ -230,6 +230,8 @@ git config --global core.editor "vim"
   #--- Protect it
   chattr +i "${file}" 2>/dev/null
 
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - update first ${RESET}"
+sudo apt-get update
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - MS visual code studio ${RESET}"
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
