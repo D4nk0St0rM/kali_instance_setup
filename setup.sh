@@ -150,7 +150,7 @@ apt-get -y -qq install terminator || echo -e ' '${RED}'[!] Issue with apt-get'${
 #--- Configure terminator
 mkdir -p ~/.config/terminator/
 file=~/.config/terminator/config; [ -e "${file}" ] && cp -n $file{,.bkup}
-[ -e "${file}" ] || cat <<EOF > "${file}"
+[ -e "${file}" ] || cat <<-EOF > "${file}"
 [global_config]
   enabled_plugins = TerminalShot, LaunchpadCodeURLHandler, APTURLHandler, LaunchpadBugURLHandler
 [keybindings]
