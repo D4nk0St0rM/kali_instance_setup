@@ -275,8 +275,8 @@ sudo rm linux-amd64-tempomail.tgz
 
 #### git clone from list
 
-wget $gitlist 1>/dev/null
 cd /opt
+sudo wget $gitlist 1>/dev/null
 cat git-clone.list | while read app || [[ -n $line ]];
 do
     echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
@@ -286,6 +286,7 @@ do
         echo -e " ${YELLOW}[i]${RESET} Try one thing ${RED} by deleting existing install $app ${YELLOW} removing any folders${RESET}"
     fi
 done
+sudo rm git-clone.list
 cd ~/
 
 
