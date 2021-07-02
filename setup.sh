@@ -13,6 +13,8 @@
 sudo apt-get update
 sudo apt-get install full-upgrade -y
 sudo apt-get install kali-linux-large -y
+sudo apt install software-properties-common
+
 
 
 ##### Colour output
@@ -48,6 +50,7 @@ sudo mv sources.list $file
 
 #### Add repo keys
 wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc
+sudo apt-add-repository -y ppa:teejee2008/ppa
 
 ### GB Locales
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ Locales (${BOLD}gb${RESET})"
@@ -228,3 +231,7 @@ git config --global core.editor "vim"
   #echo -e "domain ${domainName}\n#search ${domainName}" >> "${file}"
   #--- Protect it
   chattr +i "${file}" 2>/dev/null
+
+
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}TimeShift - backup & snapshots ${RESET}"
+sudo apt-get install -y timeshift
