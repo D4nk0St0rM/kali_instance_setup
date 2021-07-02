@@ -69,8 +69,8 @@ sudo apt install -y kali-grant-root && sudo dpkg-reconfigure kali-grant-root
 
 ### GB Locales
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ Locales (${BOLD}gb${RESET})"
-
 sudo update-locale LANG=en_GB.UTF-8
+sudo setxkbmap -layout gb
 
 #####location information
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ keyboard layout (${BOLD}gb${RESET})"
