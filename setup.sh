@@ -87,11 +87,11 @@ dpkg-reconfigure -f noninteractive tzdata
 
 ##### update 
  echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
-for FILE in clean autoremove; do apt-get -y -qq "${FILE}"; done         # Clean up      clean remove autoremove autoclean
-export DEBIAN_FRONTEND=noninteractive
-sudo apt-get -y -qq update && APT_LISTCHANGES_FRONTEND=none apt-get -o Dpkg::Options::="--force-confnew" -y dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+sudo apt-get -y -qq update 
+sudo apt-get -y dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 #--- Cleaning up temp stuff
-for FILE in clean autoremove; do sudo apt-get -y -qq "${FILE}"; done         # Clean up - clean remove autoremove autoclean
+sudo apt-get -y -qq autoremove
+
 
 ###### kernel
 _TMP=$(dpkg -l | grep linux-image- | grep -vc meta)
