@@ -212,3 +212,19 @@ file=/etc/bash.bashrc; [ -e "${file}" ] && cp -n $file{,.bkup}
 grep -q '^EDITOR' "${file}" 2>/dev/null || echo 'EDITOR="vim"' >> "${file}"
 git config --global core.editor "vim"
 
+##### Set static & protecting DNS name servers.   Note: May cause issues with forced values (e.g. captive portals etc)
+  echo -e "\n ${GREEN}[+]${RESET} Setting static & protecting ${GREEN}DNS name servers${RESET}"
+  file=/etc/resolv.conf; [ -e "${file}" ] && cp -n $file{,.bkup}
+  chattr -i "${file}" 2>/dev/null
+  #--- Remove duplicate results
+  #uniq "${file}" > "$file.new"; mv $file{.new,}
+  #--- Use OpenDNS DNS
+  #echo -e 'nameserver 208.67.222.222\nnameserver 208.67.220.220' > "${file}"
+  #--- Use Google DNS
+  #echo -e 'nameserver 8.8.8.8\nnameserver 8.8.4.4' > "${file}"
+  #--- Use Quad9 DNS
+  echo -e 'nameserver 9.9.9.9\nnameserver 149.112.112.112' > "${file}"
+  #--- Add domain
+  #echo -e "domain ${domainName}\n#search ${domainName}" >> "${file}"
+  #--- Protect it
+  chattr +i "${file}" 2>/dev/null
