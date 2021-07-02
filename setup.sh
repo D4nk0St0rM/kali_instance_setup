@@ -267,7 +267,7 @@ done
 
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - tempomail ${RESET}"
-wget https://github.com/D4nk0St0rM/oscp_ethical_hacking/blob/main/tools/linux-amd64-tempomail.tgz
+wget https://github.com/kavishgr/tempomail/releases/download/1.1.0/linux-amd64-tempomail.tgz
 tar -xzvf linux-amd64-tempomail.tgz
 sudo mv tempomail /usr/local/bin/
 sudo rm linux-amd64-tempomail.tgz
