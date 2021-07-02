@@ -10,12 +10,29 @@
 #set -x
 
 
+#### update sources.list
+echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
+
+file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
+([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
+wget https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list
+sudo mv sources.list $file
+
+
+#### Add repo keys
+wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc
 sudo apt-get update
 sudo apt-get install full-upgrade -y
 sudo apt-get install kali-linux-large -y
 sudo apt install software-properties-common -y
 sudo apt-get install gnupg-agent -y
-
+if [[ "$?" -ne 0 ]]; then
+    echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue accessing network repositories${RESET}" 1>&2
+    echo -e " ${YELLOW}[i]${RESET} Are the remote network repositories ${YELLOW}currently being sync'd${RESET}?"
+    echo -e " ${YELLOW}[i]${RESET} YOUR ${YELLOW}network repositories information${RESET}:"
+    curl -sI http://http.kali.org/README
+    exit 1
+  fi
 
 
 ##### Colour output
@@ -40,18 +57,7 @@ RESET="\033[00m"       # Normal
 #### sudo no passwd - manual
 sudo apt install -y kali-grant-root && sudo dpkg-reconfigure kali-grant-root
 
-#### update sources.list
-echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
 
-file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
-([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
-wget https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list
-sudo mv sources.list $file
-
-
-#### Add repo keys
-wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc
-sudo apt-add-repository -y ppa:teejee2008/ppa
 
 ### GB Locales
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ Locales (${BOLD}gb${RESET})"
@@ -254,7 +260,7 @@ chmod -f 0500 "${file}"
 #--- Disable random MAC address on start up
 rm -f /etc/network/if-pre-up.d/macchanger
 
-##### (Optional) Check to see if Kali is in a VM. If so, install "Virtual Machine Addons/Tools" for a "better" virtual experiment
+##### (Optional) Check to see if Kali is in a VM.
 if [ -e "/etc/vmware-tools" ]; then
   echo -e "\n "${RED}'[!]'${RESET}" VMware Tools is ${RED}already installed${RESET}. Skipping..." 1>&2
 else
@@ -289,7 +295,7 @@ else
   EOF
   sudo chmod +x /usr/local/sbin/restart-vm-tools
   #sudo sudo restart-vm-tools
-done
+fi
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}TimeShift - backup & snapshots ${RESET}"
 sudo apt-get install -y timeshift
