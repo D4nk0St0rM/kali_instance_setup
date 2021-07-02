@@ -23,9 +23,6 @@ gitlist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/g
 myzsh="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/zshrc"
 mybash="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/bashrc"
 
-#### skip prompts in apt-upgrade, etc.
-export DEBIAN_FRONTEND=noninteractive
-alias ='yes "" | apt-get -o Dpkg::Options::="--force-confdef" -y'
 
 #### update sources.list
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
