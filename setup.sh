@@ -258,10 +258,9 @@ do
     echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
     sudo apt-get install -y -qq $app
     if [[ "$?" -ne 0 ]]; then
-    echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing $app${RESET}" 1>&2
-    echo -e " ${YELLOW}[i]${RESET} There was an ${RED}issue installing $app ${YELLOW} sending to list to review'd${RESET}?"
-    echo $app >> app_not_installed.list
-    exit 1
+        echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing $app${RESET}" 1>&2
+        echo -e " ${YELLOW}[i]${RESET} There was an ${RED}issue installing $app ${YELLOW} sending to list to review'd${RESET}?"
+        echo $app >> app_not_installed.list
     fi
 done
 
