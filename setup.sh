@@ -29,10 +29,9 @@ alias ='yes "" | apt-get -o Dpkg::Options::="--force-confdef" -y'
 
 #### update sources.list
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
+sudo wget $sauces
+sudo mv sources.list /etc/apt/sources.list
 
-file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
-([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
-sudo wget $sauces > $file
 
 
 #### Add repo keys
