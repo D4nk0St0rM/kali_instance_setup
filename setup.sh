@@ -289,7 +289,7 @@ else
   EOF
   sudo chmod +x /usr/local/sbin/restart-vm-tools
   #sudo sudo restart-vm-tools
-fi
+done
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}TimeShift - backup & snapshots ${RESET}"
 sudo apt-get install -y timeshift
