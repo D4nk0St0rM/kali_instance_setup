@@ -252,6 +252,8 @@ mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/ap
 wget $mylist 1>/dev/null
 cat app-install.list | while read app || [[ -n $line ]];
 do
+    if ! command -v $app &> /dev/null
+then
     echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
     sudo apt-get install -y -qq $app
     if [[ $? -ne 0 ]]; then
@@ -259,6 +261,8 @@ do
         echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
         echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
         exit 1
+    fi
+    exit
     fi
 done
 
