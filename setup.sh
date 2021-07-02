@@ -227,28 +227,7 @@ git config --global core.editor "vim"
   chattr +i "${file}" 2>/dev/null
 
 
-
-
-echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - TimeShift ${RESET}"
-sudo apt-get install -y -qq timeshift
-if [[ $? -ne 0 ]]; then
-  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing - TimeShift ${RESET}" 1>&2
-  echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
-  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
-  exit 1
-fi
-
-echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - transport protocols ${RESET}"
-sudo apt-get install -y -qq apt-transport-https
-if [[ $? -ne 0 ]]; then
-  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing  - transport protocols ${RESET}" 1>&2
-  echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
-  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
-  exit 1
-fi
-
-
-echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN}MS visual code studio ${RESET}"
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - MS visual code studio ${RESET}"
 curl https://packages.microsoft.com/keys/microsoft.asc | gpg --dearmor > microsoft.gpg
 sudo install -o root -g root -m 644 microsoft.gpg /usr/share/keyrings/microsoft-archive-keyring.gpg
 sudo sh -c 'echo "deb [arch=amd64 signed-by=/usr/share/keyrings/microsoft-archive-keyring.gpg] https://packages.microsoft.com/repos/vscode stable main" > /etc/apt/sources.list.d/vscode.list'
@@ -256,72 +235,7 @@ sudo apt-get install -y -qq code
 sudo rm microsoft.gpg
 
 
-
-#### application install
-
-app=""
-echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
-sudo apt-get install -y -qq $app
-if [[ $? -ne 0 ]]; then
-  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing  - $app ${RESET}" 1>&2
-  echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
-  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
-  exit 1
-fi
-
-
-
-
-
-
-
-sudo apt-get install -y -qq nishang
-sudo apt-get install -y libpcap-dev libcurl4-openssl-dev libssl-dev 2>/dev/null
-sudo apt-get install -y htop 2>/dev/null
-sudo apt-get install -y hexedit 2>/dev/null
-sudo apt-get install -y exif 2>/dev/null
-sudo apt-get install git -y 2>/dev/null
-sudo apt-get install dbus-x11 -y 2>/dev/null
-sudo apt-get install linux-headers-$(uname -r) -y 2>/dev/null
-sudo apt-get install dnsutils -y 2>/dev/null
-sudo apt-get install  exiftool -y 2>/dev/null
-sudo apt-get install openvpn -y 2>/dev/null
-sudo apt-get install dialog -y 2>/dev/null
-sudo apt-get install -y protonvpn-cli 2>/dev/null
-sudo apt-get install -y protonvpn 2>/dev/null
-sudo apt-get install -y unrar 2>/dev/null
-sudo apt-get install -y terminator 2>/dev/null
-sudo apt-get install -y openvpn 2>/dev/null
-sudo apt-get install -y powercat 2>/dev/null
-sudo apt-get install -y joplin 2>/dev/null
-sudo apt-get install -y google-chrome-stable
-sudo apt-get install -y theHarvester 2>/dev/null
-sudo apt-get install -y seclists 2>/dev/null
-sudo apt-get install -y masscan 2>/dev/null
-sudo apt-get install -y onesixtyone 2>/dev/null
-sudo apt-get install -y btscanner 2>/dev/null
-sudo apt-get install -y spooftooph 2>/dev/null
-sudo apt-get install -y exploitdb
-sudo searchsploit u
-sudo apt-get install -y pure-ftpd 2>/dev/null
-sudo apt-get install -y python3 python3-pip python3-dev -y 2>/dev/null
-sudo apt-get install -y nodejs 2>/dev/null
-sudo apt-get install -y glances 2>/dev/null
-sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install -y wine32 && sudo apt-get install -y shellter
-sudo apt-get install -y realtek-rtl88xxau-dkms 2>/dev/null
-sudo apt-get install -y powershell 2>/dev/null
-sudo apt-get install -y net-tools 2>/dev/null
-sudo apt-get install -y rinetd 2>/dev/null
-sudo apt-get install -y httptunnel 2 >/dev/null
-sudo apt-get install -y zmap 2>/dev/null
-sudo apt-get install gimp -y  2>/dev/null
-sudo apt-get install -y libnetfilter-queue-dev libpcap-dev libusb-1.0-0-dev 2>/dev/null
-
-wget https://github.com/D4nk0St0rM/oscp_ethical_hacking/blob/main/tools/linux-amd64-tempomail.tgz
-tar -xzvf linux-amd64-tempomail.tgz
-sudo mv tempomail /usr/local/bin/
-sudo rm linux-amd64-tempomail.tgz
-
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - golang ${RESET}"
 sudo apt-get install -y golang 2>/dev/null
 mkdir -p ~/.go
 gopath_exp='export GOPATH="$HOME/.go"'
@@ -333,39 +247,39 @@ grep -q -F "$path_exp" "$HOME/.profile" || echo $path_exp | tee -a "$HOME/.profi
 . "$HOME/.profile"
 
 
-sudo apt-get install -y enum4linux 2>/dev/null
-sudo apt-get install -y twofi 2>/dev/null
-sudo apt-get install -y nbtscan 2>/dev/null
-sudo apt-get install -y oscanner 2>/dev/null
-sudo apt-get install -y whatweb 2>/dev/null
-sudo apt-get install -y kerberoast 2>/dev/null
+#### application install from list
+mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
+wget $mylist 1>/dev/null
+cat app-install.list | while read app || [[ -n $line ]];
+do
+    echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
+    sudo apt-get install -y -qq $app
+    if [[ $? -ne 0 ]]; then
+        echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing  - $app ${RESET}" 1>&2
+        echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
+        echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
+        exit 1
+    fi
+done
 
 
-### git clones
-cd /opt/
-sudo go get -v github.com/bettercap/bettercap
-toilet -f term -F border --gay "git clone h8mail"
-sudo git clone https://github.com/khast3x/h8mail
-toilet -f term -F border --gay "git clone nmapautomator"
-sudo git clone https://github.com/21y4d/nmapAutomator.git 2>/dev/null
-sudo git clone https://github.com/TheRook/subbrute.git 2>/dev/null
-sudo git clone https://github.com/AonCyberLabs/Windows-Exploit-Suggester.git 2>/dev/null
-
-sudo git clone https://github.com/vulnersCom/nmap-vulners.git /usr/share/nmap/scripts/vulners 2>/dev/null
-sudo git clone https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git /opt/priv-esc-scripts 2>/dev/null
-sudo git clone https://github.com/aboul3la/Sublist3r.git /opt/sublist3r 2>/dev/null
-sudo git clone https://github.com/sherlock-project/sherlock.git /opt/sherlock 2>/dev/null
-python3 -m pip install -r /opt/sherlock/requirements.txt
-sudo git clone https://github.com/OJ/gobuster.git 2>/dev/null
-sudo git clone https://github.com/initstring/linkedin2username.git
-sudo git clone https://github.com/UndeadSec/GoblinWordGenerator.git
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - tempomail ${RESET}"
+wget https://github.com/D4nk0St0rM/oscp_ethical_hacking/blob/main/tools/linux-amd64-tempomail.tgz
+tar -xzvf linux-amd64-tempomail.tgz
+sudo mv tempomail /usr/local/bin/
+sudo rm linux-amd64-tempomail.tgz
 
 
 
-
-echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Unzip files ${RESET}"
+echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - Unzip files ${RESET}"
 sudo rm /usr/share/wordlists/rockyou.txt || echo -e ' '${RED}'[!] rockyou.txt does not exist'${RESET} 1>&2
-sudo gunzip /usr/share/wordlists/rockyou.txt.gz
+sudo gunzip /usr/share/wordlists/rockyou.txt.gz 1> /dev/null
+
+echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - add architecure & windows tools ${RESET}"
+sudo dpkg --add-architecture i386 && sudo apt-get update && wine32 && shellter 1> /dev/null
+
+echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - searchsploit update ${RESET}"
+sudo searchsploit u 1> /dev/null
 
 
 echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete Folders or files ${RESET}"
