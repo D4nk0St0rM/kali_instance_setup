@@ -13,14 +13,12 @@
 export DEBIAN_FRONTEND=noninteractive
 alias ='yes "" | apt-get -o Dpkg::Options::="--force-confdef" -y'
 
-
 #### update sources.list
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
 
 file=/etc/apt/sources.list; [ -e "${file}" ] && cp -n $file{,.bkup}
 ([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
-wget https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list
-sudo mv sources.list $file
+sudo curl --progress -k -L "https://raw.githubusercontent.com/D4nk0St0rM/new_kali_instance_setup/main/sources.list" > $file
 
 
 #### Add repo keys
@@ -260,7 +258,24 @@ sudo rm microsoft.gpg
 
 
 #### application install
-sudo apt-get install -y kali-linux-large
+
+app=""
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
+sudo apt-get install -y -qq $app
+if [[ $? -ne 0 ]]; then
+  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing  - $app ${RESET}" 1>&2
+  echo -e " ${YELLOW}[i]${RESET} Does your ${YELLOW}SOURCES${RESET} include ${YELLOW}the correct repos${RESET}?"
+  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Perhaps this is a dpkg requirement${RESET}"
+  exit 1
+fi
+
+
+
+
+
+
+
+sudo apt-get install -y -qq nishang
 sudo apt-get install -y libpcap-dev libcurl4-openssl-dev libssl-dev 2>/dev/null
 sudo apt-get install -y htop 2>/dev/null
 sudo apt-get install -y hexedit 2>/dev/null
