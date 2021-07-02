@@ -258,6 +258,96 @@ sudo apt-get install -y -qq code
 sudo rm microsoft.gpg
 
 
+
+#### application install
+sudo apt-get install -y kali-linux-large
+sudo apt-get install -y libpcap-dev libcurl4-openssl-dev libssl-dev 2>/dev/null
+sudo apt-get install -y htop 2>/dev/null
+sudo apt-get install -y hexedit 2>/dev/null
+sudo apt-get install -y exif 2>/dev/null
+sudo apt-get install git -y 2>/dev/null
+sudo apt-get install dbus-x11 -y 2>/dev/null
+sudo apt-get install linux-headers-$(uname -r) -y 2>/dev/null
+sudo apt-get install dnsutils -y 2>/dev/null
+sudo apt-get install  exiftool -y 2>/dev/null
+sudo apt-get install openvpn -y 2>/dev/null
+sudo apt-get install dialog -y 2>/dev/null
+sudo apt-get install -y protonvpn-cli 2>/dev/null
+sudo apt-get install -y protonvpn 2>/dev/null
+sudo apt-get install -y unrar 2>/dev/null
+sudo apt-get install -y terminator 2>/dev/null
+sudo apt-get install -y openvpn 2>/dev/null
+sudo apt-get install -y powercat 2>/dev/null
+sudo apt-get install -y joplin 2>/dev/null
+sudo apt-get install -y google-chrome-stable
+sudo apt-get install -y theHarvester 2>/dev/null
+sudo apt-get install -y seclists 2>/dev/null
+sudo apt-get install -y masscan 2>/dev/null
+sudo apt-get install -y onesixtyone 2>/dev/null
+sudo apt-get install -y btscanner 2>/dev/null
+sudo apt-get install -y spooftooph 2>/dev/null
+sudo apt-get install -y exploitdb
+sudo searchsploit u
+sudo apt-get install -y pure-ftpd 2>/dev/null
+sudo apt-get install -y python3 python3-pip python3-dev -y 2>/dev/null
+sudo apt-get install -y nodejs 2>/dev/null
+sudo apt-get install -y glances 2>/dev/null
+sudo dpkg --add-architecture i386 && sudo apt-get update && sudo apt-get install -y wine32 && sudo apt-get install -y shellter
+sudo apt-get install -y realtek-rtl88xxau-dkms 2>/dev/null
+sudo apt-get install -y powershell 2>/dev/null
+sudo apt-get install -y net-tools 2>/dev/null
+sudo apt-get install -y rinetd 2>/dev/null
+sudo apt-get install -y httptunnel 2 >/dev/null
+sudo apt-get install -y zmap 2>/dev/null
+sudo apt-get install gimp -y  2>/dev/null
+sudo apt-get install -y libnetfilter-queue-dev libpcap-dev libusb-1.0-0-dev 2>/dev/null
+
+wget https://github.com/D4nk0St0rM/oscp_ethical_hacking/blob/main/tools/linux-amd64-tempomail.tgz
+tar -xzvf linux-amd64-tempomail.tgz
+sudo mv tempomail /usr/local/bin/
+sudo rm linux-amd64-tempomail.tgz
+
+sudo apt-get install -y golang 2>/dev/null
+mkdir -p ~/.go
+gopath_exp='export GOPATH="$HOME/.go"'
+path_exp='export PATH="/usr/local/go/bin:$GOPATH/bin:$PATH"'
+sed -i '/export GOPATH=.*/c\' ~/.profile
+sed -i '/export PATH=.*GOPATH.*/c\' ~/.profile
+echo $gopath_exp | tee -a "$HOME/.profile"
+grep -q -F "$path_exp" "$HOME/.profile" || echo $path_exp | tee -a "$HOME/.profile"
+. "$HOME/.profile"
+
+
+sudo apt-get install -y enum4linux 2>/dev/null
+sudo apt-get install -y twofi 2>/dev/null
+sudo apt-get install -y nbtscan 2>/dev/null
+sudo apt-get install -y oscanner 2>/dev/null
+sudo apt-get install -y whatweb 2>/dev/null
+sudo apt-get install -y kerberoast 2>/dev/null
+
+
+### git clones
+cd /opt/
+sudo go get -v github.com/bettercap/bettercap
+toilet -f term -F border --gay "git clone h8mail"
+sudo git clone https://github.com/khast3x/h8mail
+toilet -f term -F border --gay "git clone nmapautomator"
+sudo git clone https://github.com/21y4d/nmapAutomator.git 2>/dev/null
+sudo git clone https://github.com/TheRook/subbrute.git 2>/dev/null
+sudo git clone https://github.com/AonCyberLabs/Windows-Exploit-Suggester.git 2>/dev/null
+
+sudo git clone https://github.com/vulnersCom/nmap-vulners.git /usr/share/nmap/scripts/vulners 2>/dev/null
+sudo git clone https://github.com/carlospolop/privilege-escalation-awesome-scripts-suite.git /opt/priv-esc-scripts 2>/dev/null
+sudo git clone https://github.com/aboul3la/Sublist3r.git /opt/sublist3r 2>/dev/null
+sudo git clone https://github.com/sherlock-project/sherlock.git /opt/sherlock 2>/dev/null
+python3 -m pip install -r /opt/sherlock/requirements.txt
+sudo git clone https://github.com/OJ/gobuster.git 2>/dev/null
+sudo git clone https://github.com/initstring/linkedin2username.git
+sudo git clone https://github.com/UndeadSec/GoblinWordGenerator.git
+
+
+
+
 echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Unzip files ${RESET}"
 sudo rm /usr/share/wordlists/rockyou.txt || echo -e ' '${RED}'[!] rockyou.txt does not exist'${RESET} 1>&2
 sudo gunzip /usr/share/wordlists/rockyou.txt.gz
