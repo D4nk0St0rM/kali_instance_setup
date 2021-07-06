@@ -309,9 +309,20 @@ echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - searchsploit update ${RE
 sudo searchsploit u 1> /dev/null
 
 
-echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete Folders or files ${RESET}"
+echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete, add, folders,files,configs ${RESET}"
 sudo rm app-install.list*
 sudo rm sources.list*
+git clone https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+git clone https://github.com/zsh-users/zsh-autosuggestions.git $ZSH_CUSTOM/plugins/zsh-autosuggestions
+git clone https://github.com/zsh-users/zsh-syntax-highlighting.git $ZSH_CUSTOM/plugins/zsh-syntax-highlighting
+sudo apt install tmux
+wget https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/tmux.conf
+mv tmux.conf ~/.tmux.conf
+wget https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/bashrc
+mv ~/.bashrc ~/.bashrc_bak
+mv bashrc ~/.bashrc
+
+
 
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
