@@ -8,38 +8,14 @@ set -g default-terminal 'screen-256color'
 # export PATH=$HOME/bin:/usr/local/bin:$PATH
 
 # Path to your oh-my-zsh installation.
-export ZSH=$HOME/.oh-my-zsh
+export ZSH="/home/kali/.oh-my-zsh"
 
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
-#ZSH_THEME="robbyrussell"
-#ZSH_THEME="agnoster"
-POWERLEVEL9K_MODE='awesome-fontconfig'
-ZSH_THEME="powerlevel9k/powerlevel9k"
-POWERLEVEL9K_SHORTEN_DIR_LENGTH=3
-POWERLEVEL9K_SHORTEN_DELIMITER=".."
-POWERLEVEL9K_SHORTEN_STRATEGY="truncate_from_left"
-#POWERLEVEL9K_VPN_IP_INTERFACE='(tun.*|inet.*)'
-#POWERLEVEL9K_VPN_IP_BACKGROUND="red"
-#POWERLEVEL9K_VPN_IP_FOREGROUND="white"
-#POWERLEVEL9K_VPN_IP_SHOW_ALL=true
-POWERLEVEL9K_LEFT_PROMPT_ELEMENTS=(context dir vcs)
-POWERLEVEL9K_RIGHT_PROMPT_ELEMENTS=(status)
-POWERLEVEL9K_PROMPT_ON_NEWLINE=true
-POWERLEVEL9K_RPROMPT_ON_NEWLINE=true
-POWERLEVEL9K_MULTILINE_FIRST_PROMPT_PREFIX="↱"
-POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="↳ "
-
-# vi-mode
-#NORMAL_MODE_INDICATOR="%{$FX[italic]$FG[201]%}NORMAL%{$FX[reset]%}"
-
-# ip a | grep -E 'tun[0-9]+' | grep -E '([0-9]{1,3}\.){3}[0-9]{1,3}' | awk '{split($0,a," "); print a[5]"("a[2]")"}' | awk -F "(" '{print $2}' | sed 's/)//g'
-#
-#
-
-
+# ZSH_THEME="robbyrussell"
+ZSH_THEME="agnoster"
 # Set list of themes to pick from when loading at random
 # Setting this variable when ZSH_THEME=random will cause zsh to load
 # a theme from this variable instead of looking in $ZSH/themes/
@@ -47,7 +23,7 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="↳ "
 # ZSH_THEME_RANDOM_CANDIDATES=( "robbyrussell" "agnoster" )
 
 # Uncomment the following line to use case-sensitive completion.
-#CASE_SENSITIVE="true"
+# CASE_SENSITIVE="true"
 
 # Uncomment the following line to use hyphen-insensitive completion.
 # Case-sensitive completion must be off. _ and - will be interchangeable.
@@ -60,7 +36,7 @@ POWERLEVEL9K_MULTILINE_LAST_PROMPT_PREFIX="↳ "
 # DISABLE_UPDATE_PROMPT="true"
 
 # Uncomment the following line to change how often to auto-update (in days).
-export UPDATE_ZSH_DAYS=5
+export UPDATE_ZSH_DAYS=13
 
 # Uncomment the following line if pasting URLs and other text is messed up.
 # DISABLE_MAGIC_FUNCTIONS="true"
@@ -90,7 +66,7 @@ COMPLETION_WAITING_DOTS="true"
 # "mm/dd/yyyy"|"dd.mm.yyyy"|"yyyy-mm-dd"
 # or set a custom format using the strftime function format specifications,
 # see 'man strftime' for details.
-#HIST_STAMPS="mm/dd/yyyy"
+# HIST_STAMPS="mm/dd/yyyy"
 
 # Would you like to use another custom folder than $ZSH/custom?
 # ZSH_CUSTOM=/path/to/new-custom-folder
@@ -104,13 +80,11 @@ plugins=(
         git
         zsh-syntax-highlighting
         zsh-autosuggestions
-)
-
+    )
 source $ZSH/oh-my-zsh.sh
-
 HISTFILE=~/.zsh_history
 HISTSIZE=1000000
-SAVEHIST=2000000
+SAVEHIST=200000
 
 # User configuration
 
@@ -120,19 +94,11 @@ SAVEHIST=2000000
 # export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
- if [[ -n $SSH_CONNECTION ]]; then
-   export EDITOR='vim'
- else
-   export EDITOR='mvim'
- fi
-
- #if which tmux 2>&1 >/dev/null; then
- #      if [ $TERM != "screen-256color"  ] && [  $TERM != "screen"  ]; then
- #              tmux attach -t hack || tmux new -s hack; exit
- #                fi
- # fi
-
- export EDITOR='vim'
+# if [[ -n $SSH_CONNECTION ]]; then
+#   export EDITOR='vim'
+# else
+#   export EDITOR='mvim'
+# fi
 
 # Compilation flags
 # export ARCHFLAGS="-arch x86_64"
@@ -145,12 +111,7 @@ SAVEHIST=2000000
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-#export EDITOR=/usr/bin/nano
-#export VISUAL=/usr/bin/nano
-#export WORKON_HOME=/home/kali/.virtualenv
-#export VIRTUALENVWRAPPER_PYTHON=/usr/bin/python3
-#alias py2act='source ~/.virtualenv/python2/bin/activate'
-#alias py3act='source ~/.virtualenv/python3/bin/activate'
+
 alias pbcopy='xsel --clipboard --input'
 alias pbpaste='xsel --clipboard --output'
 
@@ -167,4 +128,3 @@ fi
 
 alias myip="curl http://ipecho.net/plain; echo"
 alias clear="clear && ls"
-
