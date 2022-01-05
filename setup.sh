@@ -22,25 +22,27 @@ mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/ap
 gitlist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/git-clone.list"
 myzsh="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/zshrc"
 mybash="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/bashrc"
-
+export HISTIGNORE="&:ls:[bf]g:exit:history"
 
 #### update sources.list
-echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
-sudo wget $sauces
-sudo mv sources.list /etc/apt/sources.list
+# echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}Sources${RESET} ~ dot list and other repos (${BOLD}gb${RESET})"
+# sudo wget $sauces
+# sudo mv /etc/apt/sources.list /etc/apt/_sources.list.original && sudo mv sources.list /etc/apt/sources.list
 
 
 
 #### Add repo keys
-wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc  1> /dev/null
+# wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | sudo tee -a /usr/share/keyrings/protonvpn.asc  1> /dev/null
 
 #### update
 echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
 echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kali-linux-large${RESET} meta-package ~ this ${BOLD}may take a while${RESET} depending on your Kali version / network etc etc...."
-sudo apt-get -y -qq install kali-linux-large || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 sudo apt-get -y -qq update
+
+#sudo apt-get -y -qq install kali-linux-large || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 sudo apt-get -y -qq dist-upgrade --fix-missing || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
-sudo apt-get install -y -qq kali-linux-large
+
+
 sudo apt-get install -y -qq software-properties-common
 sudo apt-get install -y -qq gnupg-agent
 if [[ "$?" -ne 0 ]]; then
@@ -69,78 +71,79 @@ sudo apt install -y kali-grant-root && sudo dpkg-reconfigure kali-grant-root
 
 ### GB Locales
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ Locales (${BOLD}gb${RESET})"
+sudo locale-gen en_GB.UTF-8
+sudo dpkg-reconfigure locales # manual input required
 sudo update-locale LANG=en_GB.UTF-8
 sudo setxkbmap -layout gb
 
 #####location information
-echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ keyboard layout (${BOLD}gb${RESET})"
-geoip_keyboard=$(curl -s http://ifconfig.io/country_code | tr '[:upper:]' '[:lower:]')
-[ "${geoip_keyboard}" != "gb" ] && echo -e " ${YELLOW}[i]${RESET} Keyboard layout (${BOLD}gb${RESET}}) doesn't match what's been detected via GeoIP (${BOLD}${geoip_keyboard}${RESET}})"
-file=/etc/default/keyboard; #[ -e "${file}" ] && cp -n $file{,.bkup}
-sed -i 's/XKBLAYOUT=".*"/XKBLAYOUT="'gb'"/' "${file}"
+#echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ keyboard layout (${BOLD}gb${RESET})"
+#geoip_keyboard=$(curl -s http://ifconfig.io/country_code | tr '[:upper:]' '[:lower:]')
+#[ "${geoip_keyboard}" != "gb" ] && echo -e " ${YELLOW}[i]${RESET} Keyboard layout (${BOLD}gb${RESET}}) doesn't match what's been detected via GeoIP (${BOLD}${geoip_keyboard}${RESET}})"
+#file=/etc/default/keyboard; #[ -e "${file}" ] && cp -n $file{,.bkup}
+#sed -i 's/XKBLAYOUT=".*"/XKBLAYOUT="'gb'"/' "${file}"
 
 #####  Changing time zone
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ time zone (${BOLD}Europe/London${RESET})"
-echo "Europe/London" > /etc/timezone
-ln -sf "/usr/share/zoneinfo/$(cat /etc/timezone)" /etc/localtime
-dpkg-reconfigure -f noninteractive tzdata
+sudo cp /usr/share/zoneinfo/Europe/London /etc/localtime
+# dpkg-reconfigure -f noninteractive tzdata
 
 
 ###### kernel
-_TMP=$(dpkg -l | grep linux-image- | grep -vc meta)
-if [[ "${_TMP}" -gt 1 ]]; then
-  echo -e "\n ${YELLOW}[i]${RESET} Detected multiple kernels installed"
-  TMP=$(dpkg -l | grep linux-image | grep -v meta | sort -t '.' -k 2 -g | tail -n 1 | grep "$(uname -r)")
-  [[ -z "${_TMP}" ]] && echo -e ' '${RED}'[!]'${RESET}' You are '${RED}'not using the latest kernel'${RESET} 1>&2 && echo -e " ${YELLOW}[i]${RESET} You have it downloaded & installed, ${YELLOW}just not using it${RESET}. You ${YELLOW}need to reboot${RESET}" && exit 1
-  echo -e " ${YELLOW}[i]${RESET}   Clean up: apt-get remove --purge $(dpkg -l 'linux-image-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')"  
-  echo -e " ${RED}[i]${RESET}    DO NOT RUN IF NOT USING THE LASTEST KERNEL!"
-fi
+#_TMP=$(dpkg -l | grep linux-image- | grep -vc meta)
+#if [[ "${_TMP}" -gt 1 ]]; then
+#  echo -e "\n ${YELLOW}[i]${RESET} Detected multiple kernels installed"
+#  TMP=$(dpkg -l | grep linux-image | grep -v meta | sort -t '.' -k 2 -g | tail -n 1 | grep "$(uname -r)")
+#  [[ -z "${_TMP}" ]] && echo -e ' '${RED}'[!]'${RESET}' You are '${RED}'not using the latest kernel'${RESET} 1>&2 && echo -e " ${YELLOW}[i]${RESET} You have it downloaded & installed, ${YELLOW}just not using it${RESET}. You ${YELLOW}need to reboot${RESET}" && exit 1
+#  echo -e " ${YELLOW}[i]${RESET}   Clean up: apt-get remove --purge $(dpkg -l 'linux-image-*' | sed '/^ii/!d;/'"$(uname -r | sed "s/\(.*\)-\([^0-9]\+\)/\1/")"'/d;s/^[^ ]* [^ ]* \([^ ]*\).*/\1/;/[0-9]/!d')"  
+#  echo -e " ${RED}[i]${RESET}    DO NOT RUN IF NOT USING THE LASTEST KERNEL!"
+#fi
 
 ##### Install kernel headers
-echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kernel headers${RESET}"
-sudo apt-get -y -qq install make gcc "linux-headers-$(uname -r)" || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
-if [[ $? -ne 0 ]]; then
-  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing kernel headers${RESET}" 1>&2
-  echo -e " ${YELLOW}[i]${RESET} Are you ${YELLOW}USING${RESET} the ${YELLOW}latest kernel${RESET}?"
-  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Reboot your machine${RESET}"
-  exit 1
-fi
+#echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}kernel headers${RESET}"
+#sudo apt-get -y -qq install make gcc "linux-headers-$(uname -r)" || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+#if [[ $? -ne 0 ]]; then
+#  echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing kernel headers${RESET}" 1>&2
+#  echo -e " ${YELLOW}[i]${RESET} Are you ${YELLOW}USING${RESET} the ${YELLOW}latest kernel${RESET}?"
+#  echo -e " ${YELLOW}[i]${RESET} ${YELLOW}Reboot your machine${RESET}"
+#  exit 1
+#fi
 
 
 
 ##### Configure bash - all users
-echo -e "\n ${GREEN}[+]${RESET} Configuring ${GREEN}bash${RESET} ~ CLI shell"
-file=/etc/bash.bashrc; [ -e "${file}" ] && cp -n $file{,.bkup}   #~/.bashrc
-grep -q "cdspell" "${file}" || echo "shopt -sq cdspell" >> "${file}"             # Spell check 'cd' commands
-grep -q "checkwinsize" "${file}" || echo "shopt -sq checkwinsize" >> "${file}"   # Wrap lines correctly after resizing
-grep -q "HISTSIZE" "${file}" || echo "HISTSIZE=100000" >> "${file}"               # Bash history (memory scroll back)
-grep -q "HISTFILESIZE" "${file}" || echo "HISTFILESIZE=100000" >> "${file}"       # Bash history (file .bash_history)
-grep -q "^alias ls='ls $LS_OPTIONS'" "${file}" 2>/dev/null || echo "alias ls='ls $LS_OPTIONS'" >> "${file}"
-grep -q "^alias ll='ls $LS_OPTIONS -l'" "${file}" 2>/dev/null || echo "alias ll='ls $LS_OPTIONS -l'" >> "${file}"
-grep -q "^alias l='ls $LS_OPTIONS -lA'" "${file}" 2>/dev/null || echo "alias l='ls $LS_OPTIONS -lA'" >> "${file}"
+#echo -e "\n ${GREEN}[+]${RESET} Configuring ${GREEN}bash${RESET} ~ CLI shell"
+#file=/etc/bash.bashrc; [ -e "${file}" ] && sudo cp -n $file{,.bkup}   #~/.bashrc
+#sudo grep -q "cdspell" "${file}" || echo "shopt -sq cdspell" >> "${file}"             # Spell check 'cd' commands
+#sudo grep -q "checkwinsize" "${file}" || echo "shopt -sq checkwinsize" >> "${file}"   # Wrap lines correctly after resizing
+#sudo grep -q "HISTSIZE" "${file}" || echo "HISTSIZE=100000" >> "${file}"               # Bash history (memory scroll back)
+#sudo grep -q "HISTFILESIZE" "${file}" || echo "HISTFILESIZE=100000" >> "${file}"       # Bash history (file .bash_history)
+#sudo grep -q "^alias ls='ls $LS_OPTIONS'" "${file}" 2>/dev/null || echo "alias ls='ls $LS_OPTIONS'" >> "${file}"
+#sudo grep -q "^alias ll='ls $LS_OPTIONS -l'" "${file}" 2>/dev/null || echo "alias ll='ls $LS_OPTIONS -l'" >> "${file}"
+#sudo grep -q "^alias l='ls $LS_OPTIONS -lA'" "${file}" 2>/dev/null || echo "alias l='ls $LS_OPTIONS -lA'" >> "${file}"
 #--- Apply new configs
 if [[ "${SHELL}" == "/bin/zsh" ]]; then source ~/.zshrc else source "${file}"; fi
 
 
 ##### Install bash colour - all users
-echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}bash colour${RESET} ~ colours shell output"
-file=/etc/bash.bashrc; [ -e "${file}" ] && cp -n $file{,.bkup}   #~/.bashrc
-([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
-sed -i 's/.*force_color_prompt=.*/force_color_prompt=yes/' "${file}"
-grep -q '^force_color_prompt' "${file}" 2>/dev/null || echo 'force_color_prompt=yes' >> "${file}"
-sed -i 's#PS1='"'"'.*'"'"'#PS1='"'"'${debian_chroot:+($debian_chroot)}\\[\\033\[01;31m\\]\\u@\\h\\\[\\033\[00m\\]:\\[\\033\[01;34m\\]\\w\\[\\033\[00m\\]\\$ '"'"'#' "${file}"
-grep -q "^export LS_OPTIONS='--color=auto'" "${file}" 2>/dev/null || echo "export LS_OPTIONS='--color=auto'" >> "${file}"
-grep -q '^eval "$(dircolors)"' "${file}" 2>/dev/null || echo 'eval "$(dircolors)"' >> "${file}"
-grep -q "^alias ls='ls $LS_OPTIONS'" "${file}" 2>/dev/null || echo "alias ls='ls $LS_OPTIONS'" >> "${file}"
-grep -q "^alias ll='ls $LS_OPTIONS -l'" "${file}" 2>/dev/null || echo "alias ll='ls $LS_OPTIONS -l'" >> "${file}"
-grep -q "^alias l='ls $LS_OPTIONS -lA'" "${file}" 2>/dev/null || echo "alias l='ls $LS_OPTIONS -lA'" >> "${file}"
+#echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}bash colour${RESET} ~ colours shell output"
+#file=/etc/bash.bashrc; [ -e "${file}" ] && cp -n $file{,.bkup}   #~/.bashrc
+#([[ -e "${file}" && "$(tail -c 1 ${file})" != "" ]]) && echo >> "${file}"
+#sed -i 's/.*force_color_prompt=.*/force_color_prompt=yes/' "${file}"
+#grep -q '^force_color_prompt' "${file}" 2>/dev/null || echo 'force_color_prompt=yes' >> "${file}"
+#sed -i 's#PS1='"'"'.*'"'"'#PS1='"'"'${debian_chroot:+($debian_chroot)}\\[\\033\[01;31m\\]\\u@\\h\\\[\\033\[00m\\]:\\[\\033\[01;34m\\]\\w\\[\\033\[00m\\]\\$ '"'"'#' "${file}"
+#grep -q "^export LS_OPTIONS='--color=auto'" "${file}" 2>/dev/null || echo "export LS_OPTIONS='--color=auto'" >> "${file}"
+#grep -q '^eval "$(dircolors)"' "${file}" 2>/dev/null || echo 'eval "$(dircolors)"' >> "${file}"
+#grep -q "^alias ls='ls $LS_OPTIONS'" "${file}" 2>/dev/null || echo "alias ls='ls $LS_OPTIONS'" >> "${file}"
+#grep -q "^alias ll='ls $LS_OPTIONS -l'" "${file}" 2>/dev/null || echo "alias ll='ls $LS_OPTIONS -l'" >> "${file}"
+#grep -q "^alias l='ls $LS_OPTIONS -lA'" "${file}" 2>/dev/null || echo "alias l='ls $LS_OPTIONS -lA'" >> "${file}"
 
 #--- Apply new configs
 if [[ "${SHELL}" == "/bin/zsh" ]]; then source ~/.zshrc else source "${file}"; fi
 
 ##### Install GNOME Terminator
 echo -e "\n ${GREEN}[+]${RESET} Installing GNOME ${GREEN}Terminator${RESET} ~ multiple terminals in a single window"
-apt-get -y -qq install terminator || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
+sudo apt-get -y -qq install terminator || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 #--- Configure terminator
 mkdir -p ~/.config/terminator/
 file=~/.config/terminator/config; [ -e "${file}" ] && cp -n $file{,.bkup}
@@ -167,7 +170,7 @@ file=~/.config/terminator/config; [ -e "${file}" ] && cp -n $file{,.bkup}
 [plugins]
 EOF
 
-##### Ivim - all users
+##### vim - all users
 echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}vim${RESET} ~ CLI text editor"
 sudo apt-get -y -qq install vim || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 #--- Configure vim
