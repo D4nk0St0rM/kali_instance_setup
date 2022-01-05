@@ -120,6 +120,9 @@ tar -xzvf linux-amd64-tempomail.tgz
 sudo mv tempomail /usr/local/bin/
 sudo rm linux-amd64-tempomail.tgz
 
+echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - chromium ${RESET}"
+sudo apt-get install chromium -y
+
 #### git clone from list
 
 cd /opt
