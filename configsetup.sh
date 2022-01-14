@@ -20,7 +20,7 @@ export HISTIGNORE="&:ls:[bf]g:exit:history"
 
 mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
 gitlist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/git-clone.list"
-myvim="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/_vimrc.rc"
+
 
 #### update
 echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
@@ -126,4 +126,4 @@ sudo rm sources.list*
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
 
 sudo apt-get  -y -qq autoremove
-# sudo reboot -f
+sudo reboot -f

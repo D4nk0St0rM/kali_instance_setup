@@ -57,7 +57,5 @@ traceroute
 unrar
 whatweb
 wine
-wine-bin:i386
 wine32
-wine32:i386
 winetricks
