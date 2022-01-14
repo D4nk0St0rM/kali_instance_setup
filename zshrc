@@ -1,3 +1,5 @@
+alias myip="curl http://ipecho.net/plain; echo"
+alias clear="clear && ls"
 export TERM="xterm-256color"
 set -g status-fg  green
 set -g status-bg  black
@@ -128,3 +130,4 @@ fi
 
 alias myip="curl http://ipecho.net/plain; echo"
 alias clear="clear && ls"
+
