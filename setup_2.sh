@@ -3,8 +3,11 @@
 ## D4nk0St0rM
 #### #### #### #### spread l0ve & kn0wledge #### #### #### ####
 # Inspiration from blacklanternsecurity & g0tmi1k scripts
-# Create user to not require password for sudo [sudo visudo / theUSER ALL=(ALL) NOPASSWD:ALL)
-# Use the following for password-less privesc : sudo apt-get install -y -y kali-grant-root && sudo dpkg-reconfigure kali-grant-root
+
+
+
+
+
 
 #### Enable debug mode
 #set -x
