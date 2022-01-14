@@ -25,6 +25,15 @@ sudo apt-get install -y -y kali-grant-root && sudo dpkg-reconfigure kali-grant-r
 - Screenshot
     - add to panel
 
+- Chromium
+    - add to panel
+
+- Text Editor
+    - remove from panel
+
+- Wallpaper
+    - Kali-neon
+
 
 
 
