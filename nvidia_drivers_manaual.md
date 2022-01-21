@@ -27,6 +27,7 @@ These are not official NVIDIA LEGACY drivers, but there is example GeForce GTX 1
 [Download inttf NVIDIA patcher and patch NVIDIA-Linux-x86_64-418.113 and NVIDIA-Linux-x86_64-435.21 for Kernel 5.x](https://www.if-not-true-then-false.com/2020/inttf-nvidia-patcher/)
 </p>
 </details>
+
 ### Installation
 
 - #### Make NVIDIA installer executable
