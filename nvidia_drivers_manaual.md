@@ -1,6 +1,6 @@
 ## Install NVIDIA [470.xx / 465.xx / 460.xx / 390.xx / 340.xx] Drivers on Debian / Ubuntu / Linux Mint / LMDE
 
-Source: https://www.if-not-true-then-false.com/2021/debian-ubuntu-linux-mint-nvidia-guide/#before-installation
+[Source: ](https://www.if-not-true-then-false.com/2021/debian-ubuntu-linux-mint-nvidia-guide)
 
 ### Set Up
 - #### Check is your NVIDIA card supported
