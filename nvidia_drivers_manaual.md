@@ -15,14 +15,18 @@ lspci |grep -E "VGA|3D"
 - #### Driver
 Go to http://www.nvidia.com/Download/Find.aspx?lang=en-us and find latest version of installer package. 
   
-  - ##### 340.108 users: 
+<details><summary>Notes for 340.108 users:</summary>
+<p>
 340.108 on Debian / Ubuntu / Linux Mint / LMDE Kernel 5.x needs a patched version 
 [Download inttf NVIDIA patcher and patch NVIDIA-Linux-x86_64-340.108 for Kernel 5.x](https://www.if-not-true-then-false.com/2020/inttf-nvidia-patcher/)
+</p>
+</details>
 
-  - ##### 418.113 and 435.21 users: 
+<details><summary>Notes for 418.113 and 435.21 users:</summary>
 These are not official NVIDIA LEGACY drivers, but there is example GeForce GTX 1650 Mobile card which is not supported by older or newer drivers. 
 [Download inttf NVIDIA patcher and patch NVIDIA-Linux-x86_64-418.113 and NVIDIA-Linux-x86_64-435.21 for Kernel 5.x](https://www.if-not-true-then-false.com/2020/inttf-nvidia-patcher/)
-
+</p>
+</details>
 ### Installation
 
 - #### Make NVIDIA installer executable
