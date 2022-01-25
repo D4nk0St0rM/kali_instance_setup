@@ -59,3 +59,7 @@ whatweb
 wine
 wine32
 winetricks
+feroxbuster
+wkhtmltopdf
+redis-tools
+tnscmd10g
