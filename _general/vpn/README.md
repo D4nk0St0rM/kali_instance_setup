@@ -21,10 +21,7 @@
 
       sudo apt-get update && sudo apt-get install protonvpn
 
-### UPDATE
-```
-wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | gpg --dearmor | sudo tee /usr/share/keyrings/protonvpn.gpg
-```
+
 
 
 #### How to use the official Linux beta app
