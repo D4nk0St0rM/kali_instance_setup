@@ -59,6 +59,7 @@ proxychains
 pure-ftpd
 python2
 python3
+python3-pip
 recordmydesktop
 redis-tools
 rinetd
