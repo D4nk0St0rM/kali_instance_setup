@@ -23,7 +23,7 @@
 
 ### UPDATE
 ```
-wget -O- wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | gpg --dearmor | sudo tee /usr/share/keyrings/protonvpn.gpg
+wget -q -O - https://repo.protonvpn.com/debian/public_key.asc | gpg --dearmor | sudo tee /usr/share/keyrings/protonvpn.gpg
 ```
 
 
