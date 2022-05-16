@@ -123,6 +123,22 @@ sudo gunzip /usr/share/wordlists/rockyou.txt.gz || echo -e ' '${RED}'[!] rockyou
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - add architecure & windows tools ${RESET}"
 sudo dpkg --add-architecture i386 && sudo apt-get update 1> /dev/null
 
+echo -e "\n ${GREEN}[+]${RESET} Dependancies ${GREEN} - wifite ${RESET}"
+# wifite dependancies
+sudo apt install hcxdumptool
+sudo apt install hcxtools
+# pyrit:
+sudo apt-get install libpcap-dev
+sudo apt-get install python2.7-dev libssl-dev zlib1g-dev libpcap-dev
+cd /opt
+sudo git clone https://github.com/JPaulMora/Pyrit.git​
+cd Pyrit
+sudo python setup.py clean
+sudo python setup.py build
+sudo python setup.py install
+cd ~/
+
+
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - searchsploit update ${RESET}"
 sudo searchsploit u 1> /dev/null
 
