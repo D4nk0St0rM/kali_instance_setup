@@ -20,7 +20,10 @@ export HISTIGNORE="&:ls:[bf]g:exit:history"
 
 mylist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/app-install.list"
 gitlist="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/git-clone.list"
-
+myvim="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/vimrc"
+myzsh="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/zshrc"
+mytmux="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/tmux.conf"
+mybash="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/bashrc"
 
 #### update
 echo -e "\n ${GREEN}[+]${RESET} ${GREEN}Updating OS${RESET} from repositories ~ this ${BOLD}may take a while${RESET} depending on your connection & last time you updated / distro version"
@@ -50,7 +53,7 @@ sudo apt install -y kali-grant-root && sudo dpkg-reconfigure kali-grant-root
 
 ### GB Locales
 echo -e "\n ${GREEN}[+]${RESET} Updating ${GREEN}location information${RESET} ~ Locales (${BOLD}gb${RESET})"
-sudo locale-gen en_GB.UTF-8
+# sudo locale-gen en_GB.UTF-8
 sudo dpkg-reconfigure locales # manual input required
 sudo update-locale LANG=en_GB.UTF-8
 sudo setxkbmap -layout gb
@@ -65,8 +68,7 @@ echo -e "\n ${GREEN}[+]${RESET} Installing ${GREEN}vim${RESET} ~ CLI text editor
 sudo apt-get -y -qq install vim || echo -e ' '${RED}'[!] Issue with apt-get'${RESET} 1>&2
 
 mkdir -p ~/.vim ~/.vim/autoload ~/.vim/backup ~/.vim/color ~/.vim/plugged
-wget $myvim
-mv _vimrc.rc ~/.vimrc
+wget $myvim && mv vimrc ~/.vimrc
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - update first ${RESET}"
 sudo apt-get update
@@ -82,6 +84,10 @@ do
         echo $app >> app_not_installed.list
     fi
 done
+
+# shared folder set up
+mkdir shares && sudo /usr/bin/vmhgfs-fuse .host:/ /home/kali/shares -o subtype=vmhgfs-fuse,allow_other
+
 
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - tempomail ${RESET}"
 wget https://github.com/kavishgr/tempomail/releases/download/1.1.0/linux-amd64-tempomail.tgz
@@ -111,6 +117,8 @@ cd ~/
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - Unzip files ${RESET}"
 # sudo rm /usr/share/wordlists/rockyou.txt || echo -e ' '${RED}'[!] rockyou.txt does not exist'${RESET} 1>&2
 sudo gunzip /usr/share/wordlists/rockyou.txt.gz || echo -e ' '${RED}'[!] rockyou.txt.gz does not exist'${RESET} 1>&2
+# add rockyou2021 via shared folder
+
 
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - add architecure & windows tools ${RESET}"
 sudo dpkg --add-architecture i386 && sudo apt-get update 1> /dev/null
@@ -125,5 +133,18 @@ sudo rm sources.list*
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
 
-sudo apt-get  -y -qq autoremove
+echo "sudo apt-get update"
+sudo apt-get update -qq
+echo "sudo apt-get upgrade"
+sudo apt-get upgrade -y -qq
+echo "apt-get dist-upgrade"
+sudo apt-get dist-upgrade -y -qq
+echo "apt-get full-upgrade"
+sudo apt-get full-upgrade -y -qq
+echo "sudo apt-get install"
+sudo apt-get install -y -qq
+echo "sudo apt-get autoremove"
+sudo apt-get autoremove -y -qq
+echo "apt-get clean"
+sudo apt-get clean -y -qq
 sudo reboot -f
