@@ -151,6 +151,10 @@ sudo searchsploit u 1> /dev/null
 echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete, add, folders,files,configs ${RESET}"
 sudo rm app-install.list*
 sudo rm sources.list*
+sudo rm -r videos music public
+sudo mkdir oscp tcm htb oscp/vpn oscp/pg oscp/pwk tcm/vpn tcm/pnpt htb/vpn htb/boxes
+
+
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
 
