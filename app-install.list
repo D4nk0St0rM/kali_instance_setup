@@ -78,6 +78,7 @@ tnscmd10g
 traceroute
 unrar
 whatweb
+libwine
 wine
 wine32
 gcc-10-locales
