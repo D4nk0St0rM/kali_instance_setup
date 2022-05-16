@@ -77,7 +77,7 @@ wget $mylist 1>/dev/null
 cat app-install.list | while read app || [[ -n $line ]];
 do
     echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - $app ${RESET}"
-    sudo apt-get install -y -qq $app
+    sudo apt-get install -y $app
     if [[ "$?" -ne 0 ]]; then
         echo -e ' '${RED}'[!]'${RESET}" There was an ${RED}issue installing $app${RESET}" 1>&2
         echo -e " ${YELLOW}[i]${RESET} There was an ${RED}issue installing $app ${YELLOW} sending to list to review${RESET}"
