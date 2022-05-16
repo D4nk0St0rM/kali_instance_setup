@@ -80,6 +80,8 @@ unrar
 whatweb
 wine
 wine32
+gcc-10-locales
+wine64
 winetricks
 wkhtmltopdf
 hcxdumptool
