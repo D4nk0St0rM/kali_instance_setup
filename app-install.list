@@ -82,3 +82,5 @@ wine
 wine32
 winetricks
 wkhtmltopdf
+hcxdumptool
+hcxtools

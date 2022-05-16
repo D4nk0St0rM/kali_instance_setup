@@ -138,6 +138,11 @@ sudo python setup.py build
 sudo python setup.py install
 cd ~/
 
+# protonvpn
+wget https://protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb
+sudo apt-get install /home/kali/protonvpn-stable-release_1.0.1-1_all.deb
+sudo apt-get update
+udo apt-get install protonvpn
 
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - searchsploit update ${RESET}"
 sudo searchsploit u 1> /dev/null
