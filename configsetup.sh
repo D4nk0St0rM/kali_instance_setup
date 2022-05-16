@@ -125,51 +125,63 @@ sudo dpkg --add-architecture i386 && sudo apt-get update 1> /dev/null
 
 echo -e "\n ${GREEN}[+]${RESET} Dependancies ${GREEN} - wifite ${RESET}"
 # wifite dependancies
-sudo apt install hcxdumptool
-sudo apt install hcxtools
+sudo apt install hcxdumptool && sudo apt install hcxtools
 # pyrit:
-sudo apt-get install libpcap-dev
-sudo apt-get install python2.7-dev libssl-dev zlib1g-dev libpcap-dev
+sudo apt-get install libpcap-dev -y
+sudo apt-get install python2.7-dev libssl-dev zlib1g-dev libpcap-dev -y
 cd /opt
-sudo git clone https://github.com/JPaulMora/Pyrit.git​
-cd Pyrit
-sudo python setup.py clean
-sudo python setup.py build
-sudo python setup.py install
+sudo git clone https://github.com/JPaulMora/Pyrit.git
+cd Pyrit && sudo python2 setup.py clean && sudo python2 setup.py build && sudo python2 setup.py install
 cd ~/
 
 # protonvpn
 wget https://protonvpn.com/download/protonvpn-stable-release_1.0.1-1_all.deb
 sudo apt-get install /home/kali/protonvpn-stable-release_1.0.1-1_all.deb
 sudo apt-get update
-udo apt-get install protonvpn
+udo apt-get install protonvpn -y
 
 echo -e "\n ${GREEN}[+]${RESET} Housekeeping ${GREEN} - searchsploit update ${RESET}"
 sudo searchsploit u 1> /dev/null
 
 
 echo -e "\n ${GREEN}[+]${RESET} File & Folder Management ${GREEN} - Delete, add, folders,files,configs ${RESET}"
-sudo rm app-install.list*
+sudo rm app_not_installed.list* 
 sudo rm sources.list*
-sudo rm -r videos music public
+sudo rm app_install*
+sudo rm protonvpn-stable*
+sudo rm -r Videos Music Public
 sudo mkdir oscp tcm htb oscp/vpn oscp/pg oscp/pwk tcm/vpn tcm/pnpt htb/vpn htb/boxes
 
+# python2 & python3 pip install
+# pip2
+wget https://bootstrap.pypa.io/pip/2.7/get-pip.py
+chmod u+x get-pip.py
+sudo python2 get-pip.py
+sudo rm get-pip.py
+# pip3
+
+wget https://bootstrap.pypa.io/get-pip.py
+chmod u+x get-pip.py
+sudo python3 get-pip.py
+sudo rm get-pip.py
+
+## setup-tools
+sudo pip2 install --upgrade setuptools
+sudo pip3 install --upgrade setuptools
 
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
-
+sudo apt install --reinstall python3-debian python3-chardet
 echo "sudo apt-get update"
-sudo apt-get update -qq
+sudo apt-get update
 echo "sudo apt-get upgrade"
-sudo apt-get upgrade -y -qq
+sudo apt-get upgrade -y
 echo "apt-get dist-upgrade"
-sudo apt-get dist-upgrade -y -qq
+sudo apt-get dist-upgrade -y
 echo "apt-get full-upgrade"
-sudo apt-get full-upgrade -y -qq
-echo "sudo apt-get install"
-sudo apt-get install -y -qq
+sudo apt-get full-upgrade -y
 echo "sudo apt-get autoremove"
-sudo apt-get autoremove -y -qq
+sudo apt-get autoremove -y
 echo "apt-get clean"
-sudo apt-get clean -y -qq
+sudo apt-get clean -y
 sudo reboot -f

@@ -15,10 +15,7 @@ BLUE="\033[01;34m"     # Heading
 BOLD="\033[01;01m"     # Highlight
 RESET="\033[00m"       # Normal
 
-myvim="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/_vimrc.rc"
-myzsh="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/zshrc"
-mytmux="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/tmux.conf"
-mybash="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/bashrc"
+
 
 ##### Terminals and text editors
 echo -e "\n ${GREEN}[+]${RESET}Installing ZSH & Oh-My-ZSH ${GREEN} ~ unix shell ${RESET}"
@@ -26,6 +23,12 @@ echo -e "\n ${GREEN}[+]${RESET}Installing ZSH & Oh-My-ZSH ${GREEN} ~ unix shell 
 sh -c "$(wget -O- https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
 #--- Configure zsh
 file=~/.zshrc; [ -e "$file" ] && cp -n $file{,.bkup}   #/etc/zsh/zshrc
+
+myvim="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/vimrc"
+myzsh="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/zshrc"
+mytmux="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/tmux.conf"
+mybash="https://raw.githubusercontent.com/D4nk0St0rM/kali_instance_setup/main/bashrc"
+
 wget $myzsh
 mv zshrc $file
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
@@ -40,3 +43,4 @@ wget $mybash
 mv ~/.bashrc ~/.bashrc_bak
 mv bashrc ~/.bashrc
 
+sudo reboot -f
