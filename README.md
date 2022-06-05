@@ -46,6 +46,12 @@ sudo apt-get install -y -y kali-grant-root && sudo dpkg-reconfigure kali-grant-r
 - Wallpaper
     - Kali-neon
 
+- Firefox add-ons
+    - FoxyProxy Standard
+    - Wappalyzer
+    - Burp Proxy Toggler by ZishanAdThandar
+  
+
 
 
 
