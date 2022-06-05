@@ -65,6 +65,7 @@ redis-tools
 rinetd
 seclists
 shellter
+sublist3r
 sipvicious
 smbclient
 smbmap
