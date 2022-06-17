@@ -169,6 +169,14 @@ sudo rm get-pip.py
 sudo pip2 install --upgrade setuptools
 sudo pip3 install --upgrade setuptools
 
+## pip installs
+sudo python3 -m pip install impacket
+sudo python2 -m pip install impacket
+sudo pip install badchars
+
+
+
+
 
 echo -e "\n ${GREEN}[+]${RESET} Final clean up &reboot ${GREEN} ...............Byeeeee ${RESET}"
 sudo apt install --reinstall python3-debian python3-chardet
