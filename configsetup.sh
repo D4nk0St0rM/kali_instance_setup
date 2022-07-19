@@ -98,6 +98,12 @@ sudo rm linux-amd64-tempomail.tgz
 echo -e "\n ${GREEN}[+]${RESET} Installation of applications ${GREEN} - chromium ${RESET}"
 sudo apt-get install chromium -y
 
+git clone https://github.com/hacker3983/pyrit-installer && cd pyrit-installer && sudo bash install.sh
+cd ../
+sudo rm -r pyrit-installer
+
+
+
 #### git clone from list
 
 cd /opt
