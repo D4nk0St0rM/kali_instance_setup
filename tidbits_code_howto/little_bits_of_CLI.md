@@ -1,3 +1,11 @@
+#### installed packages
+```bash
+apt list --installed
+dpkg --get-selections | grep -v deinstall
+```
+
+
+
 #### finding strings in files
 ```
 grep -rnw ../ -e 'string'
