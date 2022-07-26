@@ -43,4 +43,9 @@ wget $mybash
 mv ~/.bashrc ~/.bashrc_bak
 mv bashrc ~/.bashrc
 
+sudo apt-get autoremove -y
+sudo apt-get update
+sudo apt-get install -f
+sudo apt-get dist-upgrade -y
+
 sudo reboot -f
