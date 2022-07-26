@@ -26,7 +26,7 @@ for x in $( apt list --manual-installed 2>/dev/null | awk -F '/' '/\[installed\]
 
 while read x; do echo -e "${x}\n`aptitude why ${x}`" | grep 'Manually installed' -B1 | grep -v '^Manually installed\|^--'; done <<< $(apt-mark showmanual)
 
-apt-mark showmanual|while read x;do echo -e"$x\n`aptitude why $x`"|grep ^Man -B1|grep -v '^Man\|^-';done
+apt-mark showmanual | while read x;do echo -e"$x\n`aptitude why $x`"|grep ^Man -B1|grep -v '^Man\|^-';done
 
 ```
 
