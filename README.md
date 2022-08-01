@@ -28,6 +28,11 @@ sudo visudo / theUSER ALL=(ALL) NOPASSWD:ALL
 ```
 sudo apt-get install -y -y kali-grant-root && sudo dpkg-reconfigure kali-grant-root
 ```
+
+- Load and run Pimpmykali
+    - https://github.com/Dewalt-arch/pimpmykali.git
+    - Option N
+
 - Settings Manager
     - Power Manager
         - Display All Power Management = Never
@@ -51,8 +56,7 @@ sudo apt-get install -y -y kali-grant-root && sudo dpkg-reconfigure kali-grant-r
     - Wappalyzer
     - Burp Proxy Toggler by ZishanAdThandar
     
-- Load and run Pimpmykali
-    - https://github.com/Dewalt-arch/pimpmykali.git
+
   
 
 
