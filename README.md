@@ -50,6 +50,9 @@ sudo apt-get install -y -y kali-grant-root && sudo dpkg-reconfigure kali-grant-r
     - FoxyProxy Standard
     - Wappalyzer
     - Burp Proxy Toggler by ZishanAdThandar
+    
+- Load and run Pimpmykali
+    - https://github.com/Dewalt-arch/pimpmykali.git
   
 
 
